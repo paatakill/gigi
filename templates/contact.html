@@ -1,0 +1,16 @@
+{% extends "base.html "%}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <h1>Leave E-mail to get more information</h1>
+    {{ form.hidden_tag() }}
+    <nav class="navbar bg-body-tertiary">
+        <div class="container-fluid">
+          <form class="d-flex" role="search" method="post">
+            {{ form.email(class="form-control me-2")}}
+            {{ form.submit(class="btn btn-outline-success") }}
+          </form>
+        </div>
+      </nav>
+{% endblock %}

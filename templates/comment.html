@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Add Comment{% endblock %}
+
+{% block body %}
+
+<div class="container mt-5" style="margin-bottom: 200px;">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h6 class="mb-1">{{ review.user }} - {{ review.role }}</h6>
+            <img src="/static/images/{{ review.image }}" style="max-width: 500px;">
+            <h5 class="mb-1">{{ review.title }}</h5>
+            <p class="mb-1">{{ review.content }}</p>
+        </li>
+    </ul>
+
+    <h3 style="margin-top: 20px;">Add a Comment</h3>
+    <form method="POST" action="{{ url_for('comment', review_id=review.id) }}">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.content.label }}<br>
+            {{ form.content(class="form-control") }}<br>
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+        <br><br><br>
+        <hr>
+    </form>
+
+    <h2>Comments</h2>
+    <ul class="list-group">
+        {% for comment in comments %}
+        <li class="list-group-item">
+            <h6>{{ comment.content }}</h6>
+            <p>By: {{ comment.user }} on {{ comment.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+        </li>
+        {% if current_user.username=='admin' or current_user.username==comment.user %}
+        <a href="/delete-comment/{{ comment['id']}}" class="btn btn-danger">delete-comment</a>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

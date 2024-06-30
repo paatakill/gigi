@@ -1,0 +1,28 @@
+{% extends "base.html "%}
+{% block title %}Reviews{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+<ul class="list-group">
+{% for rev in reviews %}
+        <li class="list-group-item">
+            <h6 class="mb-1">{% if rev.role != "Admin" %} {{ rev.user }} - {{ rev.role }} {% endif %}</h6>
+            <img src="/static/images/{{ rev['image']}}"style="max-width: 500px;">
+            <h5 class="mb-1">{{ rev.title }}</h5>
+            <p class="mb-1">{{ rev.content }}</p>
+
+            <div class="btn btn-warning"><a href="{{ url_for('comment', review_id=rev.id) }}">Comments</a></div>
+            {% if current_user.username == "admin" %}
+                <a href="/delete-review/{{ rev['id']}}" class="btn btn-danger">delete-review</a>
+                <a href="/edit-review/{{ rev['id']}}" class="btn btn-primary">edit-review</a>
+            {% endif %}
+        </li>
+        <br><br><br>
+{% endfor %}
+</ul>
+</div>
+<hr>
+<a href='/' class="btn btn-primary" style="margin-bottom: 200px;">go back</a>
+
+           
+{% endblock %}
